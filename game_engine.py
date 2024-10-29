@@ -10,7 +10,7 @@ class TicTacToe:
     def get_initial_state(self):
         return np.zeros((self.rows, self.columns))
     
-    def get_next_state(self, action, state, player):
+    def get_next_state(self, state, action, player):
         row = action // self.columns
         column = action % self.columns
         state[row, column] = player
@@ -37,3 +37,6 @@ class TicTacToe:
         if np.sum(self.get_valid_moves(state)) == 0:
             return 0, True
         return 0, False
+    
+    def get_opponent(self, player):
+        return -player
