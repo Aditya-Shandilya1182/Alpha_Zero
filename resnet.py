@@ -4,8 +4,9 @@ import torch.nn.functional as F
 
 
 class ResNet(nn.Module):
-    def __init__(self, game, num_resBlocks, num_hidden):
+    def __init__(self, game, num_resBlocks, num_hidden, device):
         super().__init__()
+        self.device = device
         self.startBlock = nn.Sequential(
             nn.Conv2d(3, num_hidden, kernel_size=3, padding=1),
             nn.BatchNorm2d(num_hidden),
@@ -32,7 +33,7 @@ class ResNet(nn.Module):
             nn.Linear(3 * game.rows * game.columns, 1),
             nn.Tanh()
         )
-        
+        self.to(device)
     def forward(self, x):
         x = self.startBlock(x)
         for resBlock in self.backBone:
