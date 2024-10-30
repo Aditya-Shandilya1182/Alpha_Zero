@@ -103,7 +103,7 @@ class MCTS:
             node.backpropagate(value)    
             
             
-        action_probs = np.zeros(self.game.action_size)
+        action_probs = np.zeros(self.game.total_actions)
         for child in root.children:
             action_probs[child.action_taken] = child.visit_count
         action_probs /= np.sum(action_probs)

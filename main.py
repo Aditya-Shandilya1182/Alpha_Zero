@@ -1,20 +1,36 @@
 from game_engine import TicTacToe
+import numpy as np
+from MCTS import MCTS
 
 tictactoe = TicTacToe()
 player = 1
+
+args = {
+    'C': 1.41,
+    'num_searches': 1000
+}
+
+mcts = MCTS(tictactoe, args)
 
 state = tictactoe.get_initial_state()
 
 
 while True:
     print(state)
-    valid_moves = tictactoe.get_valid_moves(state)
-    print("valid_moves", [i for i in range(tictactoe.total_actions) if valid_moves[i] == 1])
-    action = int(input(f"{player}:"))
     
-    if valid_moves[action] == 0:
-        print("action not valid")
-        continue
+    if player == 1:
+        valid_moves = tictactoe.get_valid_moves(state)
+        print("valid_moves", [i for i in range(tictactoe.total_actions) if valid_moves[i] == 1])
+        action = int(input(f"{player}:"))
+
+        if valid_moves[action] == 0:
+            print("action not valid")
+            continue
+            
+    else:
+        neutral_state = tictactoe.change_perspective(state, player)
+        mcts_probs = mcts.search(neutral_state)
+        action = np.argmax(mcts_probs)
         
     state = tictactoe.get_next_state(state, action, player)
     

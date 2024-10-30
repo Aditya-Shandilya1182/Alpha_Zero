@@ -20,6 +20,9 @@ class TicTacToe:
         return (state.reshape(-1) == 0).astype(np.uint8)
     
     def check_win(self, state, action):
+        if action == None:
+            return False
+
         row = action // self.columns
         column = action % self.columns
         player = state[row, column]
@@ -40,3 +43,9 @@ class TicTacToe:
     
     def get_opponent(self, player):
         return -player
+    
+    def get_opponent_value(self, value):
+        return -value
+    
+    def change_perspective(self, state, player):
+        return state * player
