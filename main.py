@@ -47,7 +47,7 @@ policy = torch.softmax(policy, axis=1).squeeze(0).detach().cpu().numpy()
 print("Predicted Value:", value)
 print("Current Game State:\n", state)
 
-plt.bar(range(tictactoe.action_size), policy)
+plt.bar(range(tictactoe.total_actions), policy)
 plt.xlabel("Actions")
 plt.ylabel("Policy Probability")
 plt.title("Action Policy Distribution")
@@ -65,7 +65,7 @@ while True:
     
     if player == 1:
         valid_moves = tictactoe.get_valid_moves(state)
-        print("Valid Moves:", [i for i in range(tictactoe.action_size) if valid_moves[i] == 1])
+        print("Valid Moves:", [i for i in range(tictactoe.total_actions) if valid_moves[i] == 1])
         action = int(input(f"Player {player}'s Move (Choose an action): "))
         
         if valid_moves[action] == 0:
